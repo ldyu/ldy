@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+	
+	<package name="basicstruts2" namespace="/" extends="struts-default">
+		
+		<interceptors>
+			<interceptor name="userLogin" class="cn.itcast.login.web.intercepter.LoginInterceptor">
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<interceptor-stack name="login">
+				<interceptor-ref name="userLogin"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="login"></default-interceptor-ref>
+	
+		<!-- 用户操作Action -->
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="home">/success.jsp</result>
+		</action>
+		
+	</package>
+</struts>
